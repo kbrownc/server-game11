@@ -16,4 +16,13 @@ io.on('connection', socket => {
 			})
 		})
 	})
+	socket.on('send-game', ({ recipients, text }) => {
+		if (recipients !== undefined) recipients.forEach(recipient => {
+			const newRecipients = recipients.filter(r => r !== recipient)
+			newRecipients.push(id)
+			socket.broadcast.to(recipient).emit('receive-game', {
+				recipients: newRecipients, sender: id, text
+			})
+		})
+	})
 })
