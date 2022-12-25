@@ -8,7 +8,7 @@ io.on('connection', socket => {
 	const id = socket.handshake.query.id
 	socket.join(id)
 	socket.on('send-message', ({ recipients, text }) => {
-		console.log('send-message',recipients,text)
+		console.log('server send-message',recipients,text)
 		if (recipients !== undefined) recipients.forEach(recipient => {
 			const newRecipients = recipients.filter(r => r !== recipient)
 			newRecipients.push(id)
@@ -17,11 +17,12 @@ io.on('connection', socket => {
 			})
 		})
 	})
-	socket.on('send-game', ({ recipients, text }) => {
-		console.log('send-game',recipients, id, text)
-		if (recipients !== undefined) {
-			socket.broadcast.to(recipients).emit('receive-game', {
-				sender: id, text
+	socket.on('send-game', ({ recipients, player2, text }) => {
+		console.log('server send-game','recipients', recipients,'player2',player2,'text',text)
+		if (player2 !== undefined) {
+			console.log('server receive-game', 'id', id, 'player2',player2, 'text',text)
+			socket.broadcast.to(player2).emit('receive-game', {
+				sender: id, player2, text
 			})
 		}
 	})
