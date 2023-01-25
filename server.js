@@ -6,6 +6,7 @@ const io = require('socket.io')(5000,{
 
 io.on('connection', socket => {
 	const id = socket.handshake.query.id
+	console.log('id=',id)
 	socket.join(id)
 	socket.on('send-message', ({ recipients, text }) => {
 		if (recipients !== undefined) recipients.forEach(recipient => {
@@ -16,10 +17,11 @@ io.on('connection', socket => {
 			})
 		})
 	})
-	socket.on('send-game', ({ player1, player2, text }) => {
+	socket.on('send-game', ({ player1, player2, messageOn, text }) => {
 		if (player2 !== undefined) {
+			console.log('player1 player2 messageOn text',player1,player2,messageOn, text)
 			socket.broadcast.to(player2).emit('receive-game', {
-				sender: id, player2, text
+				sender: id, player2, messageOn, text
 			})
 		}
 	})
