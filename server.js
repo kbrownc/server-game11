@@ -17,11 +17,11 @@ io.on('connection', socket => {
 			})
 		})
 	})
-	socket.on('send-game', ({ player1, player2, workMsgOn, text }) => {
+	socket.on('send-game', ({ player1, player2, workMsgOn, game }) => {
 		if (player2 !== undefined) {
-			console.log('player1 player2 workMsgOn text',player1,player2,workMsgOn, text)
+			console.log('player1 player2 workMsgOn game',player1,player2,workMsgOn, game)
 			socket.broadcast.to(player2).emit('receive-game', {
-				sender: id, player2, workMsgOn, text
+				sender: id, player2, workMsgOn, game
 			})
 		}
 	})
