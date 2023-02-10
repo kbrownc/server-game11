@@ -21,7 +21,7 @@ io.on('connection', socket => {
 		if (player2 !== undefined) {
 			console.log('player1 player2 workMsgOn game',player1,player2,workMsgOn, game)
 			socket.broadcast.to(player2).emit('receive-game', {
-				sender: id, player2, workMsgOn, game
+				player1: id, player2, workMsgOn, game
 			})
 		}
 	})
