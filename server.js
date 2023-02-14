@@ -19,7 +19,7 @@ io.on('connection', socket => {
 	})
 	socket.on('send-game', ({ player1, player2, workMsgOn, game }) => {
 		if (player2 !== undefined) {
-			console.log('player1 player2 workMsgOn game',player1,player2,workMsgOn, game)
+			console.log('player1 player2 workMsgOn hand',player1,player2,workMsgOn, game.hand)
 			socket.broadcast.to(player2).emit('receive-game', {
 				player1: id, player2, workMsgOn, game
 			})
