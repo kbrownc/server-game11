@@ -19,7 +19,11 @@ io.on('connection', socket => {
 	})
 	socket.on('send-game', ({ player1, player2, workMsgOn, game }) => {
 		if (player2 !== undefined) {
-			//console.log('player1 player2 workMsgOn hand',player1,player2,workMsgOn, game.hand)
+			Object.assign(game, { handtemp: game.hand })['hand'];
+			Object.assign(game, { hand: game.hand2 })['hand2'];
+			Object.assign(game, { hand2: game.handtemp })['handtemp'];
+			delete game['handtemp'];
+			//console.log('player1 game',player1, game.hand)
 			socket.broadcast.to(player2).emit('receive-game', {
 				player1: id, player2, workMsgOn, game
 			})
