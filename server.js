@@ -22,6 +22,10 @@ io.on('connection', socket => {
 			Object.assign(game, { hand: game.hand2 })['hand2'];
 			Object.assign(game, { hand2: game.handtemp })['handtemp'];
 			delete game['handtemp'];
+			Object.assign(game, { handtemp: game.handDiscard })['handDiscard'];
+			Object.assign(game, { handDiscard: game.hand2Discard })['hand2Discard'];
+			Object.assign(game, { hand2Discard: game.handtemp })['handtemp'];
+			delete game['handtemp'];
 			socket.broadcast.to(player2).emit('receive-game', {
 				player1: id, player2, workMsgOn, game
 			})
